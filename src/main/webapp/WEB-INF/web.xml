@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0"
+         metadata-complete="true"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/j2ee/web-app_3_0.xsd">
+
+    <display-name>sayit</display-name>
+    <description>sayit</description>
+
+    <servlet>
+        <servlet-name>startup</servlet-name>
+        <servlet-class>system.StartUpServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>create</servlet-name>
+        <servlet-class>sayit.comment.CreateServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>restCreate</servlet-name>
+        <servlet-class>sayit.comment.rest.RestCreateServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>time</servlet-name>
+        <servlet-class>time.servlet.TimeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>alexa</servlet-name>
+        <servlet-class>alexa.AlexaServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>create</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>restCreate</servlet-name>
+        <url-pattern>/rest/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>alexa</servlet-name>
+        <url-pattern>/alexa/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>time</servlet-name>
+        <url-pattern>/time/api/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!--error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/WEB-INF/jsp/uncaughtException.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error404.htm</location>
+    </error-page-->
+
+</web-app>

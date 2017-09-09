@@ -1,0 +1,76 @@
+<html>
+
+    <script type="text/javascript">
+        function toggle(id) {
+            var e = document.getElementById(id);
+            if (e.style.display == "none"){
+                e.style.display = "";
+            } else {
+                e.style.display = "none";
+            }
+        }
+    </script>
+
+    <style>
+        html, body ,a{
+            background:#000000;
+            color:#00FF00;
+            font-family:monospace;
+            height: 100%;
+            text-decoration:  none;
+        }
+    </style>
+
+    <body>
+
+        <center>
+            <a href="javascript:toggle('form', '/create')">
+                Neu
+            </a>
+        </center>
+
+        <center>
+        <div id="form" style="display: none">
+            <form method="post" action="" enctype="multipart/form-data">
+                <table style="width: 100%">
+                    <tr>
+                        <td>User</td>
+                        <td style="text-align: left;"><input name="user" id="user" placeholder="anonym" style="width: 40%"/></td>
+                    </tr>
+                    <tr>
+                        <td>Say it!</td>
+                        <td><textarea name="comment" id="comment" rows="10" style="width: 40%"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>File</td>
+                        <td><input name="file" type="file" size="50" accept="*" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        </center>
+
+        <p>
+            <img style="float:left" src="http://www.html-form-guide.com/wp-content/uploads/2010/04/mult-search-form.png"/>
+            Anton, 22.10.2016 07:45:33<p/>
+            lorem ipsum bla bla
+            <a href="javascript:toggle('form', '/answer')">Reply</a>
+        </p>
+
+        <p style="clear:left"/>
+
+        <p>
+            <img align="left" src="http://www.html-form-guide.com/wp-content/uploads/2010/04/mult-search-form.png"/>
+            Anton, 22.10.2016 07:45:33<p/>
+            lorem ipsum bla bla
+            <a href="javascript:toggle('form', '/answer')">Reply</a>
+        </p>
+
+
+    </body>
+</html>
