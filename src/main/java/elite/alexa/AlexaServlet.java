@@ -1,4 +1,4 @@
-package alexa;
+package elite.alexa;
 
 import com.amazon.speech.speechlet.servlet.SpeechletServlet;
 
@@ -8,7 +8,7 @@ import com.amazon.speech.speechlet.servlet.SpeechletServlet;
 public class AlexaServlet extends SpeechletServlet {
 
     public AlexaServlet() {
-        System.setProperty("com.amazon.speech.speechlet.servlet.supportedApplicationIds", "amzn1.ask.skill.508d8df6-52b2-47d8-ac9c-acb3ebf723f6");
+        System.setProperty("com.amazon.speech.speechlet.servlet.supportedApplicationIds", "amzn1.ask.skill.d4cd2bc9-9efd-4f0c-b281-1e88162efcbd");
         setSpeechlet(new AlexaSpeechlet());
     }
 

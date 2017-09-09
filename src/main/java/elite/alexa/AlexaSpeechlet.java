@@ -1,4 +1,4 @@
-package alexa;
+package elite.alexa;
 
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.LaunchRequest;
@@ -24,11 +24,11 @@ public class AlexaSpeechlet implements Speechlet {
 
     @Override
     public SpeechletResponse onLaunch(LaunchRequest launchRequest, Session session) throws SpeechletException {
-        String speechText = "Hello world";
+        String speechText = "Hallo Welt";
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("HelloWorld");
+        card.setTitle("Hallo Welt");
         card.setContent(speechText);
 
         // Create the plain text output.
@@ -40,11 +40,11 @@ public class AlexaSpeechlet implements Speechlet {
 
     @Override
     public SpeechletResponse onIntent(IntentRequest intentRequest, Session session) throws SpeechletException {
-        String speechText = "Hello world";
+        String speechText = "Hallo Welt";
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
-        card.setTitle("HelloWorld");
+        card.setTitle("Hallo Welt");
         card.setContent(speechText);
 
         // Create the plain text output.

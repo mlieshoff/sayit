@@ -32,16 +32,6 @@
         </license>
     </licenses>
 
-    <properties>
-        <version>1.0.0</version>
-        <version.junit>LATEST</version.junit>
-        <version.lang>LATEST</version.lang>
-        <version.io>LATEST</version.io>
-        <version.log>LATEST</version.log>
-        <version.servlet>LATEST</version.servlet>
-        <version.db>LATEST</version.db>
-    </properties>
-
     <scm>
         <url>git:git@github.com:mlieshoff/sayit.git</url>
         <connection>scm:git:git@github.com:mlieshoff/sayit.git</connection>
@@ -110,22 +100,22 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
+            <version>4.12</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${version.lang}</version>
+            <version>3.4</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${version.io}</version>
+            <version>2.4</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>${version.servlet}</version>
+            <version>2.5</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -145,17 +135,17 @@
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
-            <version>LATEST</version>
+            <version>0.4.8</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>LATEST</version>
+            <version>2.8.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>LATEST</version>
+            <version>17.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ftpserver</groupId>
@@ -172,7 +162,8 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.10</version>
-        </dependency>        <dependency>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
@@ -201,16 +192,4 @@
         </repository>
     </distributionManagement>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.9.1</version>
-                <configuration>
-                    <configLocation>./checkstyle_checks</configLocation>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
 </project>

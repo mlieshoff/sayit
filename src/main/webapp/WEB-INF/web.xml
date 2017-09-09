@@ -31,8 +31,8 @@
     </servlet>
 
     <servlet>
-        <servlet-name>alexa</servlet-name>
-        <servlet-class>alexa.AlexaServlet</servlet-class>
+        <servlet-name>elite</servlet-name>
+        <servlet-class>elite.alexa.AlexaServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -46,8 +46,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>alexa</servlet-name>
-        <url-pattern>/alexa/*</url-pattern>
+        <servlet-name>elite</servlet-name>
+        <url-pattern>/elite/alexa/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
