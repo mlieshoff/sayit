@@ -33,7 +33,7 @@ public class Migrator {
         SchemaVersionDao schemaVersionDao = DaoFactory.getDao(SchemaVersionDao.class);
         schemaVersionDao.init(dropAndCreate);
         boolean fileExists = true;
-        while(fileExists) {
+        while (fileExists) {
             int newSchemaVersion = schemaVersionDao.readLastSchemaVersion() + 1;
             Log.info(this, "migrate", "search migration: " + String.format("migration_%s.sql", newSchemaVersion));
             // load script
@@ -53,6 +53,20 @@ public class Migrator {
                 // set new schema version
                 schemaVersionDao.setLastSchemaVersion(newSchemaVersion);
             }
+        }
+
+        URL url = Migrator.class.getClassLoader().getResource("migration_dev.sql");
+        if (url == null) {
+            File file = new File(String.format("migration_dev.sql"));
+            if (file.exists()) {
+                url = file.toURL();
+            }
+        }
+        fileExists = url != null;
+        if (fileExists) {
+            Log.info(this, "migrate", "execute migration: " + url.getFile());
+            String script = FileUtils.readFileToString(new File(url.getFile()));
+            schemaVersionDao.executeScript(script);
         }
     }
 
