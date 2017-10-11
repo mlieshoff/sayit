@@ -36,19 +36,20 @@ public class Achievments {
     public Map<String, List<UserAchievment>> compute() {
         Map<String, List<UserAchievment>> map = new HashMap<>();
         for (String nick : cube.getNicks()) {
-            List<UserAchievment> list = map.get(nick);
-            if (list == null) {
-                list = new ArrayList<>();
-                map.put(nick, list);
-            }
-            jexlContext.set("nick", nick);
-            for (Achievment achievment : achievments) {
-                String formula = achievment.getFormula();
-                int result = (int) JEXL.createExpression(formula).evaluate(jexlContext);
-                int level = achievment.getLevel(result);
-                if (level >= 0) {
-                    System.out.println(nick + " " + achievment.getId() + " -> " + result + " : " + level);
-                    list.add(new UserAchievment(achievment, level));
+            if (cube.isActive(nick)) {
+                List<UserAchievment> list = map.get(nick);
+                if (list == null) {
+                    list = new ArrayList<>();
+                    map.put(nick, list);
+                }
+                jexlContext.set("nick", nick);
+                for (Achievment achievment : achievments) {
+                    String formula = achievment.getFormula();
+                    int result = (int) JEXL.createExpression(formula).evaluate(jexlContext);
+                    int level = achievment.getLevel(result);
+                    if (level >= 0) {
+                        list.add(new UserAchievment(achievment, level));
+                    }
                 }
             }
         }

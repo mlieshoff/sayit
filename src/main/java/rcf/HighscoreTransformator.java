@@ -4,15 +4,18 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
 public class HighscoreTransformator {
 
+    private static final DecimalFormat format = new DecimalFormat("#,###,###,##0");
+
     public void transform(Cube cube, Map<String, List<UserAchievment>> userAchievments) throws IOException {
         List<IntegerUserData> usersByTotal = cube.getUsersByTotal();
         String html = createHtml(usersByTotal, userAchievments);
-        FileUtils.write(new File("/tmp/test.html"), html);
+        FileUtils.write(new File("/tmp/index.html"), html);
     }
 
     private String createHtml(List<IntegerUserData> userDatas, Map<String, List<UserAchievment>> userAchievments) {
@@ -25,14 +28,14 @@ public class HighscoreTransformator {
         s.append("<div class=\"col-6\">");
         s.append("Nick");
         s.append("</div>");
-        s.append("<div class=\"col\">");
+        s.append("<div class=\"col text-right\">");
         s.append("Punkte");
         s.append("</div>");
-        s.append("<div class=\"col\">");
+        s.append("<div class=\"col text-right\">");
         s.append("Auszeichnungen");
         s.append("</div>");
         s.append("</div>");
-        for (UserData userData : userDatas) {
+        for (IntegerUserData userData : userDatas) {
             s.append("<div class=\"row\">");
             s.append("<div class=\"col\">");
             s.append(userData.getRank());
@@ -40,10 +43,10 @@ public class HighscoreTransformator {
             s.append("<div class=\"col-6\">");
             s.append(userData.getName());
             s.append("</div>");
-            s.append("<div class=\"col\">");
-            s.append(userData.getValue());
+            s.append("<div class=\"col text-right\">");
+            s.append(format.format(userData.getValue()));
             s.append("</div>");
-            s.append("<div class=\"col\">");
+            s.append("<div class=\"col text-right\">");
             s.append(renderAchievments(userAchievments.get(userData.getName())));
             s.append("</div>");
             s.append("</div>");
@@ -60,7 +63,7 @@ public class HighscoreTransformator {
                 "    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n" +
                 "  </head>\n" +
                 "  <body>\n" +
-                "    <h1>Hello, world!</h1>\n" +
+                "    <h1 align=\"center\">Royal Card Forces Highscore</h1>\n" +
                 "%s" +
                 "\n" +
                 "    <!-- Optional JavaScript -->\n" +
@@ -78,7 +81,7 @@ public class HighscoreTransformator {
         s.append("<div class=\"row\">");
         for (UserAchievment userAchievment : userAchievments) {
             s.append("<div class=\"col-sm-4\">");
-            s.append(String.format("<img src=\"%s\" class=\"img-thumbnail rounded\" alt=\"Responsive image\">", userAchievment.getAchievment().getImage()));
+            s.append(String.format("<img src=\"%s\" class=\"img-thumbnail rounded\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"%s\" alt=\"Responsive image\">", userAchievment.getAchievment().getImage(), userAchievment.getAchievment().getTitle()));
             s.append("</div>");
         }
         s.append("</div>");

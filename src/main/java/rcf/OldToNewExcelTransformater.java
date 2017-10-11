@@ -12,8 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,12 +22,17 @@ public class OldToNewExcelTransformater {
 
     private Map<Integer, Type> types = new HashMap<>();
 
-    private Set<Achievment> achievments = new HashSet<>();
+    private Set<Achievment> achievments = new LinkedHashSet<>();
 
     private Cube cube = new Cube();
 
+    private final static int BANNED_COLOR = 53;
+    private final static int LEADER_COLOR = 34;
+    private final static int VICE_COLOR = 17;
+
     public static void main(String[] args) throws Exception {
-        new OldToNewExcelTransformater().transform(new File("/home/micha/rcf-test.xls"), new File("/home/micha/rcf-achievments.xls"));
+        new OldToNewExcelTransformater().transform(new File("/home/micha/rcf_spends.xls"), new File("/home/micha/rcf-achievments.xls"));
+//        new OldToNewExcelTransformater().transform(new File("/home/micha/rcf-test.xls"), new File("/home/micha/rcf-achievments.xls"));
     }
 
     private void transform(File data, File achievmentsFile) throws IOException {
@@ -97,6 +102,7 @@ public class OldToNewExcelTransformater {
         if (cell != null) {
             String nickname = cell.getStringCellValue();
             register(nickname, row, 1);
+            register(nickname, cell.getCellStyle().getFillBackgroundColor());
             for (int i = 2; i < row.getLastCellNum(); i = i + 3) {
                 register(nickname, row, i);
                 register(nickname, row, i + 1);
@@ -105,21 +111,31 @@ public class OldToNewExcelTransformater {
         }
     }
 
-    private void register(String nickanme, Row row, int index) {
-        int week = index % 3;
+    private void register(String nickname, short state) {
+        if (state == BANNED_COLOR) {
+            cube.onBanned(nickname);
+        } else if (state == LEADER_COLOR) {
+            cube.onLeader(nickname);
+        } else if (state == VICE_COLOR) {
+            cube.onVice(nickname);
+        }
+    }
+
+    private void register(String nickname, Row row, int index) {
+        int week = index / 3;
         Cell cell = row.getCell(index);
         Type type = types.get(index);
         if (type == Type.TOTAL) {
             int total = getInt(row.getCell(1));
-            cube.onTotal(nickanme, total);
+            cube.onTotal(nickname, total);
         } else if (type == Type.WIN) {
-            cube.onBattle(nickanme, week, getDouble(cell));
+            cube.onBattle(nickname, week, getDouble(cell));
         } else if (type == Type.CROWN) {
-            cube.onCrown(nickanme, week, getInt(cell));
+            cube.onCrown(nickname, week, getInt(cell));
         } else if (type == Type.DONATION) {
-            cube.onDonation(nickanme, week, getInt(cell));
+            cube.onDonation(nickname, week, getInt(cell));
         } else if (type == Type.WEEK) {
-            cube.onWeek(nickanme, week, getInt(cell));
+            cube.onWeek(nickname, week, getInt(cell));
         }
     }
 

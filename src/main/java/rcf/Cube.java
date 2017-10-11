@@ -1,6 +1,9 @@
 package rcf;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -26,10 +29,20 @@ public class Cube {
 
     private Set<Integer> weeks = new TreeSet<>();
     private Set<String> nicks = new HashSet<>();
+    private Set<String> bannedNicks = new HashSet<>();
+    private Set<String> leaderNicks = new HashSet<>();
+    private Set<String> viceNicks = new HashSet<>();
+    private Set<String> founderNicks = new HashSet<>();
 
     private Map<String, Integer> ranksByNick = new HashMap<>();
 
     private List<IntegerUserData> usersByTotal = null;
+
+    public Cube() {
+        founderNicks.add("Dine");
+        founderNicks.add("Micah");
+        founderNicks.add("Tobi");
+    }
 
     public void onTotal(String nickname, int value) {
         totalsByNick.put(nickname, value);
@@ -71,10 +84,13 @@ public class Cube {
         }
         List<IntegerUserData> list = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : totalsByNick.entrySet()) {
-            IntegerUserData userData = new IntegerUserData();
-            userData.setName(entry.getKey());
-            userData.setValue(entry.getValue());
-            list.add(userData);
+            String nickname = entry.getKey();
+            if (!isBanned(nickname) && isActive(nickname)) {
+                IntegerUserData userData = new IntegerUserData();
+                userData.setName(nickname);
+                userData.setValue(entry.getValue());
+                list.add(userData);
+            }
         }
         Collections.sort(list, new Comparator<IntegerUserData>() {
             @Override
@@ -138,8 +154,8 @@ public class Cube {
         return weeks;
     }
 
-    public Set<String> getNicks() {
-        return nicks;
+    public Collection<String> getNicks() {
+        return CollectionUtils.subtract(nicks, bannedNicks);
     }
 
     public int getNumberOfWeeksByNick(String nick) {
@@ -152,6 +168,38 @@ public class Cube {
 
     public void init() {
         getUsersByTotal();
+    }
+
+    public void onBanned(String nickname) {
+        bannedNicks.add(nickname);
+    }
+
+    public void onLeader(String nickname) {
+        leaderNicks.add(nickname);
+    }
+
+    public void onVice(String nickname) {
+        viceNicks.add(nickname);
+    }
+
+    public boolean isBanned(String nickname) {
+        return bannedNicks.contains(nickname);
+    }
+
+    public boolean isLeader(String nickname) {
+        return leaderNicks.contains(nickname);
+    }
+
+    public boolean isVice(String nickname) {
+        return viceNicks.contains(nickname);
+    }
+
+    public boolean isFounder(String nickname) {
+        return founderNicks.contains(nickname);
+    }
+
+    public boolean isActive(String nickname) {
+        return weekTotalsByNick.getOrDefault(getWeekNickname(nickname, 1), 0) > 0;
     }
 
 }
