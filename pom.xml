@@ -39,7 +39,8 @@
     </scm>
 
     <build>
-        <finalName>ROOT</finalName>
+        <!--finalName>ROOT</finalName-->
+        <finalName>sayit</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

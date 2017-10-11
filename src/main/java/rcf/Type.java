@@ -2,12 +2,12 @@ package rcf;
 
 public enum Type {
 
-    NAME("Nickname"),
-    TOTAL("Join"),
-    DONATION("Spenden"),
-    CROWN("Truhe"),
-    WIN("Kampf"),
-    WEEK("KW"),
+    NAME("nickname"),
+    TOTAL("join"),
+    DONATION("spenden"),
+    CROWN("truhe"),
+    WIN("kampf"),
+    WEEK("kw"),
     ;
 
     private final String pattern;
@@ -18,7 +18,7 @@ public enum Type {
 
     public static Type get(String name) {
         for (Type type : values()) {
-            if (name.contains(type.pattern)) {
+            if (name.toLowerCase().contains(type.pattern)) {
                 return type;
             }
         }

@@ -5,16 +5,17 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class HighscoreTransformator {
 
-    public void transform(Cube cube) throws IOException {
+    public void transform(Cube cube, Map<String, List<UserAchievment>> userAchievments) throws IOException {
         List<IntegerUserData> usersByTotal = cube.getUsersByTotal();
-        String html = createHtml(usersByTotal);
+        String html = createHtml(usersByTotal, userAchievments);
         FileUtils.write(new File("/tmp/test.html"), html);
     }
 
-    private String createHtml(List<IntegerUserData> userDatas) {
+    private String createHtml(List<IntegerUserData> userDatas, Map<String, List<UserAchievment>> userAchievments) {
         StringBuilder s = new StringBuilder();
         s.append("<div class=\"container\">");
         s.append("<div class=\"row\">");
@@ -25,7 +26,10 @@ public class HighscoreTransformator {
         s.append("Nick");
         s.append("</div>");
         s.append("<div class=\"col\">");
-        s.append("Score");
+        s.append("Punkte");
+        s.append("</div>");
+        s.append("<div class=\"col\">");
+        s.append("Auszeichnungen");
         s.append("</div>");
         s.append("</div>");
         for (UserData userData : userDatas) {
@@ -38,6 +42,9 @@ public class HighscoreTransformator {
             s.append("</div>");
             s.append("<div class=\"col\">");
             s.append(userData.getValue());
+            s.append("</div>");
+            s.append("<div class=\"col\">");
+            s.append(renderAchievments(userAchievments.get(userData.getName())));
             s.append("</div>");
             s.append("</div>");
         }
@@ -64,6 +71,18 @@ public class HighscoreTransformator {
                 "  </body>\n" +
                 "</html>";
         return String.format(template, s.toString());
+    }
+
+    private String renderAchievments(List<UserAchievment> userAchievments) {
+        StringBuilder s = new StringBuilder();
+        s.append("<div class=\"row\">");
+        for (UserAchievment userAchievment : userAchievments) {
+            s.append("<div class=\"col-sm-4\">");
+            s.append(String.format("<img src=\"%s\" class=\"img-thumbnail rounded\" alt=\"Responsive image\">", userAchievment.getAchievment().getImage()));
+            s.append("</div>");
+        }
+        s.append("</div>");
+        return s.toString();
     }
 
 }

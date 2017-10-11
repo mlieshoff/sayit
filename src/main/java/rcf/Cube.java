@@ -24,8 +24,6 @@ public class Cube {
 
     private Map<String, Integer> numberOfWeeksByNick = new HashMap<>();
 
-    private Map<String, List<Achievment>> achievmentsByNick = new HashMap<>();
-
     private Set<Integer> weeks = new TreeSet<>();
     private Set<String> nicks = new HashSet<>();
 
@@ -136,10 +134,6 @@ public class Cube {
         return weekBattlesByNick;
     }
 
-    public Map<String, List<Achievment>> getAchievmentsByNick() {
-        return achievmentsByNick;
-    }
-
     public Set<Integer> getWeeks() {
         return weeks;
     }
@@ -154,6 +148,10 @@ public class Cube {
 
     public Integer getRank(String nick) {
         return ranksByNick.get(nick);
+    }
+
+    public void init() {
+        getUsersByTotal();
     }
 
 }

@@ -27,7 +27,7 @@ public class OldToNewExcelTransformater {
     private Cube cube = new Cube();
 
     public static void main(String[] args) throws Exception {
-        new OldToNewExcelTransformater().transform(new File("/home/micha/rcf_spends.xls"), new File("/home/micha/rcf-achievments.xls"));
+        new OldToNewExcelTransformater().transform(new File("/home/micha/rcf-test.xls"), new File("/home/micha/rcf-achievments.xls"));
     }
 
     private void transform(File data, File achievmentsFile) throws IOException {
@@ -43,9 +43,9 @@ public class OldToNewExcelTransformater {
             }
             computeRow(row);
         }
-        cube.getUsersByTotal();
-        new Achievments(cube, achievments).compute();
-        new HighscoreTransformator().transform(cube);
+        cube.init();
+        Map<String, List<UserAchievment>> userAchievments = new Achievments(cube, achievments).compute();
+        new HighscoreTransformator().transform(cube, userAchievments);
     }
 
     private void loadAchievments(File file) throws IOException {
@@ -126,6 +126,9 @@ public class OldToNewExcelTransformater {
     private double getDouble(Cell cell) {
         try {
             return cell.getNumericCellValue();
+        } catch (IllegalStateException e) {
+            String s = cell.getStringCellValue();
+            return Double.valueOf(s);
         } catch (NullPointerException e) {
             return 0;
         }

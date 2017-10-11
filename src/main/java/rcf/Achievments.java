@@ -4,6 +4,10 @@ import org.apache.commons.jexl2.JexlContext;
 import org.apache.commons.jexl2.JexlEngine;
 import org.apache.commons.jexl2.MapContext;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Achievments {
@@ -29,8 +33,14 @@ public class Achievments {
         jexlContext.set("c", new RfcFunctions(jexlContext, cube));
     }
 
-    public void compute() {
+    public Map<String, List<UserAchievment>> compute() {
+        Map<String, List<UserAchievment>> map = new HashMap<>();
         for (String nick : cube.getNicks()) {
+            List<UserAchievment> list = map.get(nick);
+            if (list == null) {
+                list = new ArrayList<>();
+                map.put(nick, list);
+            }
             jexlContext.set("nick", nick);
             for (Achievment achievment : achievments) {
                 String formula = achievment.getFormula();
@@ -38,9 +48,11 @@ public class Achievments {
                 int level = achievment.getLevel(result);
                 if (level >= 0) {
                     System.out.println(nick + " " + achievment.getId() + " -> " + result + " : " + level);
+                    list.add(new UserAchievment(achievment, level));
                 }
             }
         }
+        return map;
     }
 
 }
