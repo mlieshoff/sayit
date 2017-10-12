@@ -4,10 +4,12 @@ public class UserAchievment {
 
     private final Achievment achievment;
     private final int level;
+    private final int count;
 
-    public UserAchievment(Achievment achievment, int level) {
+    public UserAchievment(Achievment achievment, int level, int count) {
         this.achievment = achievment;
         this.level = level;
+        this.count = count;
     }
 
     public Achievment getAchievment() {
@@ -16,6 +18,10 @@ public class UserAchievment {
 
     public int getLevel() {
         return level;
+    }
+
+    public int getCount() {
+        return count;
     }
 
 }

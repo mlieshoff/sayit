@@ -12,18 +12,21 @@ public class Achievment {
     private final String formula;
     private final String image;
     private final String mode;
+    private final boolean active;
 
     private final AchievmentType achievmentType;
 
     private final List<Integer> thresholds = new ArrayList<>();
 
-    public Achievment(String id, String title, String formula, String image, String mode, AchievmentType achievmentType, List<Integer> thresholds) {
+    public Achievment(String id, String title, String formula, String image, String mode, AchievmentType achievmentType,
+            List<Integer> thresholds, boolean active) {
         this.id = id;
         this.title = title;
         this.formula = formula;
         this.image = image;
         this.mode = mode;
         this.achievmentType = achievmentType;
+        this.active = active;
         if (CollectionUtils.isNotEmpty(thresholds)) {
             this.thresholds.addAll(thresholds);
         }
@@ -55,6 +58,10 @@ public class Achievment {
 
     public List<Integer> getThresholds() {
         return thresholds;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public int getLevel(int result) {

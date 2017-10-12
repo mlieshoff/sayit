@@ -13,16 +13,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class OldToNewExcelTransformater {
 
     private Map<Integer, Type> types = new HashMap<>();
-
-    private Set<Achievment> achievments = new LinkedHashSet<>();
 
     private Cube cube = new Cube();
 
@@ -49,7 +45,7 @@ public class OldToNewExcelTransformater {
             computeRow(row);
         }
         cube.init();
-        Map<String, List<UserAchievment>> userAchievments = new Achievments(cube, achievments).compute();
+        Map<String, List<UserAchievment>> userAchievments = new Achievments(cube).compute();
         new HighscoreTransformator().transform(cube, userAchievments);
     }
 
@@ -67,9 +63,10 @@ public class OldToNewExcelTransformater {
                     row.getCell(5).getStringCellValue(),
                     row.getCell(6).getStringCellValue(),
                     getAchievmentType(row.getCell(2).getStringCellValue()),
-                    getThresholds(row.getCell(3).getStringCellValue().replace("#", ""))
+                    getThresholds(row.getCell(3).getStringCellValue().replace("#", "")),
+                    getInt(row.getCell(7)) == 1
             );
-            achievments.add(achievment);
+            cube.addAchievment(achievment);
         }
     }
 

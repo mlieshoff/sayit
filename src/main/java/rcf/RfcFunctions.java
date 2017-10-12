@@ -1,5 +1,6 @@
 package rcf;
 
+import com.google.common.base.Optional;
 import org.apache.commons.jexl2.JexlContext;
 
 public class RfcFunctions {
@@ -40,6 +41,11 @@ public class RfcFunctions {
     public Integer founder() {
         String nick = (String) jexlContext.get("nick");
         return cube.isFounder(nick) ? 1 : 0;
+    }
+
+    public Integer weekWins() {
+        String nick = (String) jexlContext.get("nick");
+        return Optional.fromNullable(cube.getNumberOfWeekWinsByNick(nick)).or(0);
     }
 
 }

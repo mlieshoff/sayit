@@ -1,5 +1,6 @@
 package rcf;
 
+import com.google.common.base.Optional;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
@@ -8,12 +9,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Cube {
+
+    private Set<Achievment> achievments = new LinkedHashSet<>();
 
     private Map<String, Integer> totalsByNick = new HashMap<>();
     private Map<String, Integer> totalCrownsByNick = new HashMap<>();
@@ -26,6 +30,9 @@ public class Cube {
     private Map<String, Double> weekBattlesByNick = new HashMap<>();
 
     private Map<String, Integer> numberOfWeeksByNick = new HashMap<>();
+
+    private Map<String, Integer> numberOfWeekWinsByNick = new HashMap<>();
+    private Map<Integer, String> weekWinnersByWeek = new HashMap<>();
 
     private Set<Integer> weeks = new TreeSet<>();
     private Set<String> nicks = new HashSet<>();
@@ -106,6 +113,29 @@ public class Cube {
         return list;
     }
 
+    public void computeWeeks() {
+        for (int week : weeks) {
+            String highestWeekNick = null;
+            int highest = 0;
+            for (String nick : nicks) {
+                String weekNick = getWeekNickname(nick, week);
+                Integer actual = weekTotalsByNick.get(weekNick);
+                if (actual != null) {
+                    if (actual > highest) {
+                        highest = actual;
+                        highestWeekNick = nick;
+                    }
+                }
+            }
+            if (highestWeekNick != null) {
+                weekWinnersByWeek.put(week, highestWeekNick);
+                int number = Optional.fromNullable(numberOfWeekWinsByNick.get(highestWeekNick)).or(0);
+                number ++;
+                numberOfWeekWinsByNick.put(highestWeekNick, number);
+            }
+        }
+    }
+
     public void rankThem(List<UserData> list) {
         int visual = 1;
         UserData oldUserData = null;
@@ -162,11 +192,17 @@ public class Cube {
         return numberOfWeeksByNick.get(nick);
     }
 
+    public int getNumberOfWeekWinsByNick(String nick) {
+        System.out.println(nick + " - " + numberOfWeekWinsByNick.get(nick));
+        return Optional.fromNullable(numberOfWeekWinsByNick.get(nick)).or(0);
+    }
+
     public Integer getRank(String nick) {
         return ranksByNick.get(nick);
     }
 
     public void init() {
+        computeWeeks();
         getUsersByTotal();
     }
 
@@ -200,6 +236,14 @@ public class Cube {
 
     public boolean isActive(String nickname) {
         return weekTotalsByNick.getOrDefault(getWeekNickname(nickname, 1), 0) > 0;
+    }
+
+    public void addAchievment(Achievment achievment) {
+        achievments.add(achievment);
+    }
+
+    public Set<Achievment> getAchievments() {
+        return achievments;
     }
 
 }

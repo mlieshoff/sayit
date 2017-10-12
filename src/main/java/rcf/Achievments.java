@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Achievments {
 
@@ -24,11 +23,8 @@ public class Achievments {
 
     private final JexlContext jexlContext;
 
-    private final Set<Achievment> achievments;
-
-    public Achievments(Cube cube, Set<Achievment> achievments) {
+    public Achievments(Cube cube) {
         this.cube = cube;
-        this.achievments = achievments;
         jexlContext = new MapContext();
         jexlContext.set("c", new RfcFunctions(jexlContext, cube));
     }
@@ -43,12 +39,14 @@ public class Achievments {
                     map.put(nick, list);
                 }
                 jexlContext.set("nick", nick);
-                for (Achievment achievment : achievments) {
-                    String formula = achievment.getFormula();
-                    int result = (int) JEXL.createExpression(formula).evaluate(jexlContext);
-                    int level = achievment.getLevel(result);
-                    if (level >= 0) {
-                        list.add(new UserAchievment(achievment, level));
+                for (Achievment achievment : cube.getAchievments()) {
+                    if (achievment.isActive()) {
+                        String formula = achievment.getFormula();
+                        int result = (int) JEXL.createExpression(formula).evaluate(jexlContext);
+                        int level = achievment.getLevel(result);
+                        if (level >= 0) {
+                            list.add(new UserAchievment(achievment, level, result));
+                        }
                     }
                 }
             }

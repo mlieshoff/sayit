@@ -14,44 +14,49 @@ public class HighscoreTransformator {
 
     public void transform(Cube cube, Map<String, List<UserAchievment>> userAchievments) throws IOException {
         List<IntegerUserData> usersByTotal = cube.getUsersByTotal();
-        String html = createHtml(usersByTotal, userAchievments);
+        String html = createHtml(cube, usersByTotal, userAchievments);
         FileUtils.write(new File("/tmp/index.html"), html);
     }
 
-    private String createHtml(List<IntegerUserData> userDatas, Map<String, List<UserAchievment>> userAchievments) {
+    private String createHtml(Cube cube, List<IntegerUserData> userDatas, Map<String, List<UserAchievment>> userAchievments) {
         StringBuilder s = new StringBuilder();
-        s.append("<div class=\"container\">");
-        s.append("<div class=\"row\">");
-        s.append("<div class=\"col\">");
-        s.append("Rank");
-        s.append("</div>");
-        s.append("<div class=\"col-6\">");
+        s.append("<table class=\"table table-inverse table-striped\">");
+        s.append("<thead>");
+        s.append("<tr>");
+        s.append("<th>");
+        s.append("#");
+        s.append("</th>");
+        s.append("<th>");
         s.append("Nick");
-        s.append("</div>");
-        s.append("<div class=\"col text-right\">");
+        s.append("</th>");
+        s.append("<th>");
         s.append("Punkte");
-        s.append("</div>");
-        s.append("<div class=\"col text-right\">");
-        s.append("Auszeichnungen");
-        s.append("</div>");
-        s.append("</div>");
+        s.append("</th>");
+        s.append("<th>");
+        s.append("Abzeichen");
+        s.append("</th>");
+        s.append("</tr>");
+        s.append("</thead>");
+        s.append("<tbody>");
         for (IntegerUserData userData : userDatas) {
-            s.append("<div class=\"row\">");
-            s.append("<div class=\"col\">");
+            s.append("<tr>");
+            s.append("<th scope=\"row\">");
             s.append(userData.getRank());
-            s.append(".</div>");
-            s.append("<div class=\"col-6\">");
+            s.append(".</th>");
+            s.append("<td>");
             s.append(userData.getName());
-            s.append("</div>");
-            s.append("<div class=\"col text-right\">");
+            s.append("</td>");
+            s.append("<td>");
             s.append(format.format(userData.getValue()));
-            s.append("</div>");
-            s.append("<div class=\"col text-right\">");
+            s.append("</td>");
+            s.append("<td>");
             s.append(renderAchievments(userAchievments.get(userData.getName())));
-            s.append("</div>");
-            s.append("</div>");
+            s.append("</td>");
+            s.append("</tr>");
         }
-        s.append("</div>");
+        s.append("</tbody>");
+        s.append("</table>");
+        s.append(achievments(cube));
         String template = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "  <head>\n" +
@@ -76,15 +81,48 @@ public class HighscoreTransformator {
         return String.format(template, s.toString());
     }
 
+    private String achievments(Cube cube) {
+        StringBuilder s = new StringBuilder();
+        s.append("<table class=\"table table-inverse table-striped\">");
+        s.append("<thead>");
+        s.append("<tr>");
+        s.append("<th>");
+        s.append("Abzeichen");
+        s.append("</th>");
+        s.append("<th>");
+        s.append("Bezeichnung");
+        s.append("</th>");
+        s.append("</tr>");
+        s.append("</thead>");
+        s.append("<tbody>");
+        for (Achievment achievment : cube.getAchievments()) {
+            if (achievment.isActive()) {
+                s.append("<tr>");
+                s.append("<th scope=\"row\">");
+                s.append(String.format("<img src=\"%s\" style=\"padding-right: 5px; width: 8%%; height: 8%%\" class=\"img-fluid\" data-toggle=\"tooltip\" data-placement=\"right\" alt=\"Responsive image\">", achievment.getImage()));
+                s.append("</th>");
+                s.append("<td>");
+                s.append(achievment.getTitle());
+                s.append("</td>");
+                s.append("</tr>");
+            }
+        }
+        s.append("</tbody>");
+        s.append("</table>");
+        return s.toString();
+    }
+
     private String renderAchievments(List<UserAchievment> userAchievments) {
         StringBuilder s = new StringBuilder();
-        s.append("<div class=\"row\">");
         for (UserAchievment userAchievment : userAchievments) {
-            s.append("<div class=\"col-sm-4\">");
-            s.append(String.format("<img src=\"%s\" class=\"img-thumbnail rounded\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"%s\" alt=\"Responsive image\">", userAchievment.getAchievment().getImage(), userAchievment.getAchievment().getTitle()));
-            s.append("</div>");
+            s.append(String.format("<img src=\"%s\" style=\"padding-right: 5px; width: 8%%; height: 8%%\" class=\"img-fluid\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"%s Level: %s (%s*)\" alt=\"Responsive image\">",
+                    userAchievment.getAchievment().getImage(),
+                    userAchievment.getAchievment().getTitle(),
+                    userAchievment.getLevel() + 1,
+                    userAchievment.getCount()
+                )
+            );
         }
-        s.append("</div>");
         return s.toString();
     }
 
