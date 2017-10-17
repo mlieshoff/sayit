@@ -1,6 +1,7 @@
 package rcf;
 
 import org.apache.commons.io.FileUtils;
+import rcf.achievment.Achievment;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,6 +116,7 @@ public class HighscoreTransformator {
     private String renderAchievments(List<UserAchievment> userAchievments) {
         StringBuilder s = new StringBuilder();
         for (UserAchievment userAchievment : userAchievments) {
+            /*
             s.append(String.format("<img src=\"%s\" style=\"padding-right: 5px; width: 8%%; height: 8%%\" class=\"img-fluid\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"%s Level: %s (%s*)\" alt=\"Responsive image\">",
                     userAchievment.getAchievment().getImage(),
                     userAchievment.getAchievment().getTitle(),
@@ -122,6 +124,8 @@ public class HighscoreTransformator {
                     userAchievment.getCount()
                 )
             );
+            */
+            s.append(userAchievment.getAchievment().getSign());
         }
         return s.toString();
     }

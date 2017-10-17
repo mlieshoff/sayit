@@ -1,4 +1,4 @@
-package rcf;
+package rcf.extract;
 
 /**
  * @author Michael Lieshoff, 07.07.17

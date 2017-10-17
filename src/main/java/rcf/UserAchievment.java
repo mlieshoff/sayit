@@ -1,5 +1,7 @@
 package rcf;
 
+import rcf.achievment.Achievment;
+
 public class UserAchievment {
 
     private final Achievment achievment;

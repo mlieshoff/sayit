@@ -1,4 +1,4 @@
-package rcf;
+package rcf.extract;
 
 import com.google.common.base.Optional;
 import org.apache.commons.io.FileUtils;
@@ -30,7 +30,7 @@ public class Crawler {
     private File tmpDir = new File(System.getProperty("java.io.tmpdir"));
 
     public Crawler() {
-        if (Boolean.valueOf(System.getProperty("com.bytediscover.ta.lib.web.Crawler.cached", "false"))) {
+        if (Boolean.valueOf(System.getProperty("org.mili.Crawler.cached", "false"))) {
             cached = true;
         }
     }

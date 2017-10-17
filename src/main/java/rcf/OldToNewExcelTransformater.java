@@ -6,6 +6,9 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import rcf.achievment.Achievment;
+import rcf.achievment.AchievmentType;
+import rcf.achievment.Achievments;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -28,7 +31,6 @@ public class OldToNewExcelTransformater {
 
     public static void main(String[] args) throws Exception {
         new OldToNewExcelTransformater().transform(new File("/home/micha/rcf_spends.xls"), new File("/home/micha/rcf-achievments.xls"));
-//        new OldToNewExcelTransformater().transform(new File("/home/micha/rcf-test.xls"), new File("/home/micha/rcf-achievments.xls"));
     }
 
     private void transform(File data, File achievmentsFile) throws IOException {
@@ -64,7 +66,8 @@ public class OldToNewExcelTransformater {
                     row.getCell(6).getStringCellValue(),
                     getAchievmentType(row.getCell(2).getStringCellValue()),
                     getThresholds(row.getCell(3).getStringCellValue().replace("#", "")),
-                    getInt(row.getCell(7)) == 1
+                    getInt(row.getCell(7)) == 1,
+                    row.getCell(8).getStringCellValue()
             );
             cube.addAchievment(achievment);
         }

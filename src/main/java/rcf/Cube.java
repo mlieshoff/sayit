@@ -2,6 +2,7 @@ package rcf;
 
 import com.google.common.base.Optional;
 import org.apache.commons.collections4.CollectionUtils;
+import rcf.achievment.Achievment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -134,6 +135,7 @@ public class Cube {
                 numberOfWeekWinsByNick.put(highestWeekNick, number);
             }
         }
+        System.out.println(weekWinnersByWeek);
     }
 
     public void rankThem(List<UserData> list) {
@@ -235,7 +237,8 @@ public class Cube {
     }
 
     public boolean isActive(String nickname) {
-        return weekTotalsByNick.getOrDefault(getWeekNickname(nickname, 1), 0) > 0;
+        return true;
+//        return weekTotalsByNick.getOrDefault(getWeekNickname(nickname, 1), 0) > 0;
     }
 
     public void addAchievment(Achievment achievment) {

@@ -1,4 +1,4 @@
-package rcf;
+package rcf.achievment;
 
 public enum AchievmentType {
 

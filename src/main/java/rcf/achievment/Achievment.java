@@ -1,4 +1,4 @@
-package rcf;
+package rcf.achievment;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -12,6 +12,7 @@ public class Achievment {
     private final String formula;
     private final String image;
     private final String mode;
+    private final String sign;
     private final boolean active;
 
     private final AchievmentType achievmentType;
@@ -19,7 +20,7 @@ public class Achievment {
     private final List<Integer> thresholds = new ArrayList<>();
 
     public Achievment(String id, String title, String formula, String image, String mode, AchievmentType achievmentType,
-            List<Integer> thresholds, boolean active) {
+            List<Integer> thresholds, boolean active, String sign) {
         this.id = id;
         this.title = title;
         this.formula = formula;
@@ -27,6 +28,7 @@ public class Achievment {
         this.mode = mode;
         this.achievmentType = achievmentType;
         this.active = active;
+        this.sign = sign;
         if (CollectionUtils.isNotEmpty(thresholds)) {
             this.thresholds.addAll(thresholds);
         }
@@ -62,6 +64,10 @@ public class Achievment {
 
     public boolean isActive() {
         return active;
+    }
+
+    public String getSign() {
+        return sign;
     }
 
     public int getLevel(int result) {

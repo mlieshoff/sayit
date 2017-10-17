@@ -17,6 +17,8 @@ package system.dao;
  * limitations under the License.
  */
 
+import com.google.common.base.Optional;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -50,11 +52,11 @@ public class ConnectionPool {
     }
 
     private ConnectionContext connection(boolean autoReconnect) throws Exception {
-        String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-        String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-        String username = System.getenv("OPENSHIFT_MYSQL_DB_USERNAME");
-        String password = System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD");
-        String url = "jdbc:mysql://" + host + ":" + port + "/sayit";
+        String host = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_HOST")).or("localhost");
+        String port = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_PORT")).or("3306");
+        String username = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_USERNAME")).or("root");
+        String password = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD")).or("");
+        String url = "jdbc:mysql://" + host + ":" + port + "/sayit?useUnicode=true&characterEncoding=utf-8";
         if (autoReconnect) {
             url += "?autoReconnect=true";
         }
