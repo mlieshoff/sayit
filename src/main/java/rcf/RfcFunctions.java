@@ -48,4 +48,9 @@ public class RfcFunctions {
         return Optional.fromNullable(cube.getNumberOfWeekWinsByNick(nick)).or(0);
     }
 
+    public Integer weeks() {
+        String nick = (String) jexlContext.get("nick");
+        return Optional.fromNullable(cube.getNumberOfWeeksByNick(nick)).or(0);
+    }
+
 }

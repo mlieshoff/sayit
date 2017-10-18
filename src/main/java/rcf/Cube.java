@@ -3,6 +3,7 @@ package rcf;
 import com.google.common.base.Optional;
 import org.apache.commons.collections4.CollectionUtils;
 import rcf.achievment.Achievment;
+import rcf.db.RcfUser;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,8 @@ import java.util.TreeSet;
 public class Cube {
 
     private Set<Achievment> achievments = new LinkedHashSet<>();
+
+    private Map<String, RcfUser> users = new HashMap<>();
 
     private Map<String, Integer> totalsByNick = new HashMap<>();
     private Map<String, Integer> totalCrownsByNick = new HashMap<>();
@@ -46,10 +49,12 @@ public class Cube {
 
     private List<IntegerUserData> usersByTotal = null;
 
+    public static final String TOBI = "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ";
+
     public Cube() {
-        founderNicks.add("Dine");
-        founderNicks.add("Micah");
-        founderNicks.add("Tobi");
+        founderNicks.add("dine");
+        founderNicks.add("micah");
+        founderNicks.add(TOBI);
     }
 
     public void onTotal(String nickname, int value) {
@@ -79,7 +84,9 @@ public class Cube {
         if (i == null) {
             i = 0;
         }
-        numberOfWeeksByNick.put(nickname, ++ i);
+        if (value > 0) {
+            numberOfWeeksByNick.put(nickname, ++i);
+        }
     }
 
     private String getWeekNickname(String nickname, int week) {
@@ -93,10 +100,11 @@ public class Cube {
         List<IntegerUserData> list = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : totalsByNick.entrySet()) {
             String nickname = entry.getKey();
-            if (!isBanned(nickname) && isActive(nickname)) {
+            if (!isBanned(nickname)) {
                 IntegerUserData userData = new IntegerUserData();
                 userData.setName(nickname);
                 userData.setValue(entry.getValue());
+                userData.setTag(users.get(nickname).getTag());
                 list.add(userData);
             }
         }
@@ -135,7 +143,6 @@ public class Cube {
                 numberOfWeekWinsByNick.put(highestWeekNick, number);
             }
         }
-        System.out.println(weekWinnersByWeek);
     }
 
     public void rankThem(List<UserData> list) {
@@ -195,7 +202,6 @@ public class Cube {
     }
 
     public int getNumberOfWeekWinsByNick(String nick) {
-        System.out.println(nick + " - " + numberOfWeekWinsByNick.get(nick));
         return Optional.fromNullable(numberOfWeekWinsByNick.get(nick)).or(0);
     }
 
@@ -208,37 +214,20 @@ public class Cube {
         getUsersByTotal();
     }
 
-    public void onBanned(String nickname) {
-        bannedNicks.add(nickname);
-    }
-
-    public void onLeader(String nickname) {
-        leaderNicks.add(nickname);
-    }
-
-    public void onVice(String nickname) {
-        viceNicks.add(nickname);
-    }
-
     public boolean isBanned(String nickname) {
         return bannedNicks.contains(nickname);
     }
 
     public boolean isLeader(String nickname) {
-        return leaderNicks.contains(nickname);
+        return "Leader".equals(users.get(nickname).getRole());
     }
 
     public boolean isVice(String nickname) {
-        return viceNicks.contains(nickname);
+        return "Co-leader".equals(users.get(nickname).getRole());
     }
 
     public boolean isFounder(String nickname) {
         return founderNicks.contains(nickname);
-    }
-
-    public boolean isActive(String nickname) {
-        return true;
-//        return weekTotalsByNick.getOrDefault(getWeekNickname(nickname, 1), 0) > 0;
     }
 
     public void addAchievment(Achievment achievment) {
@@ -249,4 +238,7 @@ public class Cube {
         return achievments;
     }
 
+    public void onUser(RcfUser user) {
+        users.put(user.getNickname(), user);
+    }
 }

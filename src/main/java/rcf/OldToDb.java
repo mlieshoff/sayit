@@ -35,7 +35,7 @@ public class OldToDb {
     public static void main(String[] args) throws Exception {
         MigrationService migrationService = ServiceFactory.getService(MigrationService.class);
         migrationService.migrate(false);
-        new OldToDb().transform(new File("/media/1und1/rcf_spends.xls"));
+        new OldToDb().transform(new File("/media/micha/1und1/rcf_spends.xls"));
     }
 
     private void transform(File data) throws IOException, ServiceException {

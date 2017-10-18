@@ -31,7 +31,7 @@ public class CreateHighscoreFromDb {
     public static void main(String[] args) throws ServiceException, IOException {
         MigrationService migrationService = ServiceFactory.getService(MigrationService.class);
         migrationService.migrate(false);
-        new CreateHighscoreFromDb().transform(new File("/media/1und1/rcf-achievments.xls"));
+        new CreateHighscoreFromDb().transform(new File("/media/micha/1und1/rcf-achievments.xls"));
     }
 
     private void transform(File achievmentsFile) throws IOException, ServiceException {
@@ -40,6 +40,7 @@ public class CreateHighscoreFromDb {
         List<RcfUser> users = rcfService.getUsers();
         List<RcfClanWeek> weeks = rcfService.getClanWeeks();
         for (RcfUser user : users) {
+            cube.onUser(user);
             int total = 0;
             for (RcfClanWeek week : weeks) {
                 int weekInt = getWeek(week);

@@ -2,6 +2,8 @@ package rcf.achievment;
 
 public enum AchievmentType {
 
-    PROGRESSABLE
+    PROGRESSABLE,
+    ONEOFF,
+    SINGLE
 
 }
