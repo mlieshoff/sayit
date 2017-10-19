@@ -124,8 +124,8 @@ public class RcfDao extends Dao {
                 if (hasSpends(rcfClanWeek, rcfUser)) {
                     update("update rcf_spend_week_user set amount=? where user=? and clanWeek=?;",
                             spends,
-                            rcfClanWeek.getId(),
-                            rcfUser.getId()
+                            rcfUser.getId(),
+                            rcfClanWeek.getId()
                     );
                 } else {
                     update("insert into rcf_spend_week_user(user, clanWeek, amount) values(?, ?, ?);",
@@ -150,8 +150,8 @@ public class RcfDao extends Dao {
                 if (hasContribution(rcfClanWeek, rcfUser)) {
                     update("update rcf_chest_week_user set amount=? where user=? and clanWeek=?;",
                             crowns,
-                            rcfClanWeek.getId(),
-                            rcfUser.getId()
+                            rcfUser.getId(),
+                            rcfClanWeek.getId()
                     );
                 } else {
                     update("insert into rcf_chest_week_user(user, clanWeek, amount) values(?, ?, ?);",
@@ -185,12 +185,20 @@ public class RcfDao extends Dao {
             }});
     }
 
+    public List<RcfUser> getUsers2() throws SQLException {
+        return query(USER_ROW_TRANSFORMER, "select * from rcf_user");
+    }
+
     public List<RcfClanWeek> getRcfClanWeeks() throws DaoException {
         return doInDao(new Lambda<List<RcfClanWeek>>() {
             @Override
             public List<RcfClanWeek> exec(Object... params) throws SQLException {
                 return query(CLAN_WEEK_ROW_TRANSFORMER, "select * from rcf_clan_week");
             }});
+    }
+
+    public List<RcfClanWeek> getRcfClanWeeks2() throws SQLException {
+        return query(CLAN_WEEK_ROW_TRANSFORMER, "select * from rcf_clan_week");
     }
 
     public Integer getSpendsForWeekAndUser(final RcfClanWeek week, final RcfUser user) throws DaoException {
@@ -201,12 +209,20 @@ public class RcfDao extends Dao {
             }});
     }
 
+    public Integer getSpendsForWeekAndUser2(final RcfClanWeek week, final RcfUser user) throws SQLException {
+        return querySingle(INT_ROW_TRANSFORMER, "select amount from rcf_spend_week_user where user=? and clanWeek=?", user.getId(), week.getId());
+    }
+
     public Integer getCrownsForWeekAndUser(final RcfClanWeek week, final RcfUser user) throws DaoException {
         return doInDao(new Lambda<Integer>() {
             @Override
             public Integer exec(Object... params) throws SQLException {
                 return querySingle(INT_ROW_TRANSFORMER, "select amount from rcf_chest_week_user where user=? and clanWeek=?", user.getId(), week.getId());
             }});
+    }
+
+    public Integer getCrownsForWeekAndUser2(final RcfClanWeek week, final RcfUser user) throws SQLException {
+        return querySingle(INT_ROW_TRANSFORMER, "select amount from rcf_chest_week_user where user=? and clanWeek=?", user.getId(), week.getId());
     }
 
 }

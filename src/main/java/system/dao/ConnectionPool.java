@@ -55,7 +55,7 @@ public class ConnectionPool {
         String host = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_HOST")).or("localhost");
         String port = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_PORT")).or("3306");
         String username = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_USERNAME")).or("root");
-        String password = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD")).or("root");
+        String password = Optional.fromNullable(System.getenv("OPENSHIFT_MYSQL_DB_PASSWORD")).or("");
         String url = "jdbc:mysql://" + host + ":" + port + "/sayit?useUnicode=true&characterEncoding=utf-8";
         if (autoReconnect) {
             url += "?autoReconnect=true";
