@@ -19,10 +19,10 @@ package elite.api;
 
 import elite.api.dao.UserDao;
 import elite.api.dto.User;
-import system.dao.DaoFactory;
-import system.service.Service;
-import system.service.ServiceException;
-import system.util.Lambda;
+import org.mili.utils.Lambda;
+import org.mili.utils.sql.dao.DaoFactory;
+import org.mili.utils.sql.service.Service;
+import org.mili.utils.sql.service.ServiceException;
 
 public class EliteService extends Service {
 

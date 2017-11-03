@@ -4,9 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
-import sayit.comment.SayItService;
-import system.service.ServiceFactory;
-import system.util.Log;
+import org.mili.utils.Log;
+import org.mili.utils.sql.service.ServiceFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

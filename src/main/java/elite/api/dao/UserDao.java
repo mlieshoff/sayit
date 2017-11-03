@@ -18,10 +18,10 @@ package elite.api.dao;
  */
 
 import elite.api.dto.User;
-import system.dao.Dao;
-import system.dao.DaoException;
-import system.dao.RowTransformer;
-import system.util.Lambda;
+import org.mili.utils.Lambda;
+import org.mili.utils.sql.RowTransformer;
+import org.mili.utils.sql.dao.Dao;
+import org.mili.utils.sql.dao.DaoException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

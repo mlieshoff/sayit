@@ -20,12 +20,12 @@ package sayit.comment;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FilenameUtils;
-import system.dao.DaoException;
-import system.dao.DaoFactory;
-import system.service.Service;
-import system.service.ServiceException;
-import system.util.Lambda;
-import system.util.Log;
+import org.mili.utils.Lambda;
+import org.mili.utils.Log;
+import org.mili.utils.sql.dao.DaoException;
+import org.mili.utils.sql.dao.DaoFactory;
+import org.mili.utils.sql.service.Service;
+import org.mili.utils.sql.service.ServiceException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

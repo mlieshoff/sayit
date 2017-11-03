@@ -17,11 +17,11 @@ package time.dao;
  * limitations under the License.
  */
 
-import system.dao.Dao;
-import system.dao.DaoException;
-import system.dao.RowTransformer;
-import system.util.Crypta;
-import system.util.Lambda;
+import org.mili.utils.Crypta;
+import org.mili.utils.Lambda;
+import org.mili.utils.sql.RowTransformer;
+import org.mili.utils.sql.dao.Dao;
+import org.mili.utils.sql.dao.DaoException;
 import time.dto.User;
 
 import java.sql.ResultSet;

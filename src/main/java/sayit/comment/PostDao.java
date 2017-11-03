@@ -18,11 +18,11 @@ package sayit.comment;
  */
 
 import org.apache.commons.lang3.StringUtils;
-import system.dao.Dao;
-import system.dao.DaoException;
-import system.dao.RowTransformer;
-import system.util.Lambda;
-import system.util.Log;
+import org.mili.utils.Lambda;
+import org.mili.utils.Log;
+import org.mili.utils.sql.RowTransformer;
+import org.mili.utils.sql.dao.Dao;
+import org.mili.utils.sql.dao.DaoException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

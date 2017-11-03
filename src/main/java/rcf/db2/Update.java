@@ -3,9 +3,9 @@ package rcf.db2;
 import jcrapi.Api;
 import jcrapi.model.DetailedClan;
 import jcrapi.model.MembersItem;
-import system.service.MigrationService;
-import system.service.ServiceException;
-import system.service.ServiceFactory;
+import org.mili.utils.sql.service.MigrationService;
+import org.mili.utils.sql.service.ServiceException;
+import org.mili.utils.sql.service.ServiceFactory;
 
 import java.io.IOException;
 

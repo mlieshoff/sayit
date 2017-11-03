@@ -219,6 +219,11 @@
             <artifactId>commons-logging</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.mili</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <distributionManagement>

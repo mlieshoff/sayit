@@ -1,8 +1,8 @@
 package system;
 
-import system.service.MigrationService;
-import system.service.ServiceFactory;
-import system.util.Log;
+import org.mili.utils.Log;
+import org.mili.utils.sql.service.MigrationService;
+import org.mili.utils.sql.service.ServiceFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
