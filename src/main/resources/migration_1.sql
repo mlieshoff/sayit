@@ -31,5 +31,3 @@ create table `shard` (
     `password` varchar(255),
     PRIMARY KEY (`id`)
 );
-
-insert into `shard` values(1, 'sayit2016.lima-ftp.de', 21, 'sayit2016.lima-city.de', 'sayit2016', 'CBqE92ga6E');
